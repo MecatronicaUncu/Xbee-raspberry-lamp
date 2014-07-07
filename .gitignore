@@ -1,0 +1,4 @@
+#=== Productos de compilación ===
+*.out
+*~
+
