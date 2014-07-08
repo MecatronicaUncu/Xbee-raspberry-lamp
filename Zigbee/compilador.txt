@@ -1,0 +1,2 @@
+ 
+gcc -o prog05_tcp_client prog05_tcp_client.c -std=c99 -U__STRICT_ANSI__ -W -Wall -pedantic -O3 -D_REENTRANT -lpthread -lm
