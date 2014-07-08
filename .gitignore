@@ -1,4 +1,4 @@
 #=== Productos de compilación ===
 *.out
 *~
-
+*.bin
