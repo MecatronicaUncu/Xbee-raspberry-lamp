@@ -33,35 +33,6 @@ int serialFd=0;
 
 
 
-void *
-dialogThread(void *arg)
-{
-pthread_detach(pthread_self());
-//---- obtain dialog socket from arg ----
-int dialogSocket=*(int*)arg;
-free(arg);
-for(;;)
-  {
-  //---- receive and display message from client ----
-  char buffer[0x100];
-  int nb=recv(dialogSocket,buffer,0x100,0);
-  if(nb<=0) { break; }
-  buffer[nb]='\0';
-  printf("%s\n",buffer);
-  write(serialFd,buffer,nb);
-
-  //---- send reply to client ----
-  nb=sprintf(buffer,"%d bytes received\n",nb);
-  if(send(dialogSocket,buffer,nb,0)==-1)
-    { perror("send"); exit(1); }
-  }
-
-//---- close dialog socket ----
-printf("client disconnected\n");
-close(dialogSocket);
-return (void *)0;
-}
-
 
 int
 main(int argc,
@@ -76,8 +47,8 @@ main(int argc,
 	
 	 // default Config
 	int portNumber=INPORT;
-	char serialport[256];
-	int baudrate = B9600; 
+    char serialport[256];
+    int baudrate = B9600; 
     
     //Init Mutex
     //sem_init(&mutex, 0, 1);
@@ -97,7 +68,7 @@ main(int argc,
 	
 	//Init serial port
 	serialFd = serial_init(serialport, baudrate);
-	if(serialFd==-1) {fprintf(stderr,"invalid serialport %s\n",argv[2]); exit(1); }
+    if(serialFd==-1) {fprintf(stderr,"invalid serialport %s\n",argv[2]); exit(1); }
 #endif
 	
 	//Init Listen Socket	
@@ -145,7 +116,7 @@ main(int argc,
 			free(buf);
 		}
 		
-		// ... We have listenSocket input
+		//we have listenSocket input
 		else if (FD_ISSET(listenSocket, &rfds))
 		{
 			//Accept new connection
@@ -160,13 +131,31 @@ main(int argc,
 				//Cantidad Maxima?
 				id++;
 				//Print the new connection
-				printf("new connection-> ID:%d from %s:%d \n",id,inet_ntoa(fromAddr.sin_addr),ntohs(fromAddr.sin_port));	
+				printf("new connection-> ID:%d from %s:%d \n",id,inet_ntoa(fromAddr.sin_addr),ntohs(fromAddr.sin_port));
+				//send Zigbee list
+				int nb=0;
+				if(zgb_list==NULL){
+#if DEBUG		
+					nb=sprintf((char*)buffer,"Any Zigbee connected yet\n");
+					if(send(dialogSocket,buffer,nb,0)==-1){ perror("send"); exit(1); }
+#endif
+					}
+				else{//Report to the webpage all zigbee conected
+					for(zgb_elem=zgb_list; zgb_elem != NULL; zgb_elem=(zigbee*)(zgb_elem->hh.next)) {
+						nb=sprintf((char*)buffer,"%02x:%02x:\n",NEWSENSOR,zgb_elem->key);
+						if(send(dialogSocket,buffer,nb,0)==-1){ perror("send"); exit(1);}}}
+				
+				//add msg to circular-list
+				if ((msg_elem = (msg*)malloc(sizeof(msg))) == NULL) exit(-1);
+				msg_elem->ident=id;
+				msg_elem->sockFd=dialogSocket;
+				HASH_ADD_INT(msg_list, ident, msg_elem);	
 								
 				//---- start a new dialog thread ----
 				  pthread_t th;
 				  int *arg=(int *)malloc(sizeof(int));
-				  *arg=dialogSocket;
-				  if(pthread_create(&th,(pthread_attr_t *)0,dialogThread,arg))
+				  *arg=id;
+				  if(pthread_create(&th,(pthread_attr_t *)0,send_serial,arg))
 					{ fprintf(stderr,"cannot create thread\n"); exit(1); }
 			}
 		}
@@ -177,8 +166,6 @@ main(int argc,
 	close(serialFd);
 	return 0;
 }
-
-
 
 
 void *
@@ -313,6 +300,7 @@ void reponse(unsigned char * buf,int n)
 #endif
 	
 	
+	//for(msg_elem=msg_list; msg_elem != NULL; msg_elem=(msg*)(msg_elem->hh.next)) {printf("key %d, sock %d\n", msg_elem->id, msg_elem->sockFd);}
 	switch(packet[3]){
 		case NODEID:
 			// add Zigbee to circular-list
