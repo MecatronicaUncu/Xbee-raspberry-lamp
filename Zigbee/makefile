@@ -5,7 +5,7 @@ CFLAGS=-std=c99 -U__STRICT_ANSI__ \
        -D_REENTRANT
 LDFLAGS=-lpthread -lm
 SOURCES=Serial_Init.c APIframe_gen.c Zigbee.c
-EXECUTABLE=zigbee
+EXECUTABLE=zigbee.bin
 
 
 all: clean ${EXECUTABLE} 
