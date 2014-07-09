@@ -1,4 +1,4 @@
-#Â!/bin/bash
+#!/bin/bash
 
 ## ParÃametros de config del puerto serie/usb
 SERIALPORT=/dev/ttyUSB0
