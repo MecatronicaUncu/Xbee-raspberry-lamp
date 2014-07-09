@@ -66,6 +66,8 @@ typedef struct zigbeee_struct {
 //Thread function
 void *
 send_serial(void* arg);
+void *
+dialogThread(void *arg);
 //Function for return values to the webpage
 void 
 reponse(unsigned char *buf,int n);
