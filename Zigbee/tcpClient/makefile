@@ -7,8 +7,7 @@ LDFLAGS=-lpthread -lm
 SOURCES=prog05_tcp_client.c
 EXECUTABLE=prog05_tcp_client.bin
 
-
-all: clean ${EXECUTABLE}
+all: clean ${EXECUTABLE} 
 
 .SUFFIXES:
 
