@@ -178,9 +178,9 @@ dialogThread(void *arg)
       write(serialFd,buffer,nb);
 
       //---- send reply to client ----
-      nb=sprintf(buffer,"%d bytes received\n",nb);
+      /*nb=sprintf(buffer,"%d bytes received\n",nb);
       if(send(dialogSocket,buffer,nb,0)==-1)
-	{ perror("send"); exit(1); }
+	{ perror("send"); exit(1); }*/
    }
 
   //---- close dialog socket ----
