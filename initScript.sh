@@ -8,7 +8,7 @@ SERIALSPEED=9600
 ZIGBEEPORT=1234
 
 echo "Iniciando Lighttpd"
-lighttpd -f lighttpd.conf
+lighttpd -f website/lighttpd.conf
 
 echo "Iniciando servidor C zigbee.bin"
 sudo ./Zigbee/zigbee.bin $ZIGBEEPORT $SERIALPORT $SERIALSPEED
