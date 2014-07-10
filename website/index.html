@@ -33,7 +33,7 @@
  				background-color: #E8E8E8;
 			    margin: 30px 10px 30px 30px;
 			    padding: 10px;
-				width: 500px;
+				width: 100px;
 			}
 			div#Interruption {
 				float:left;
@@ -64,22 +64,20 @@
 				<button onclick="Conect(1)">Conectar</button>
 				<DIV ID="conect"></DIV>
 			</DIV>
-			<DIV ID="ATcommands">
-					<!--<input type="text" id="ATCOM" placeholder="AT Command"><br> -->
-					<!--<input type="text" id="PARAM" placeholder="Parametres"><br>	Entrada de texto-->				
-					<button onclick="sendmessage(1)">Send</button>
+			<DIV ID="ATcommands">			
+					<button onclick="sendmessage(1)">Interruptor 1</button>
 					<div id="box"><span id="div10"></span>&nbsp;</div>	
 			</DIV>
 			<DIV ID="ATcommands">				
-					<button onclick="sendmessage(2)">Send</button>
+					<button onclick="sendmessage(2)">Interruptor 2</button>
 					<div id="box"><span id="div20"></span>&nbsp;</div>	
 			</DIV>
 			<DIV ID="ATcommands">			
-					<button onclick="sendmessage(3)">Send</button>
+					<button onclick="sendmessage(3)">Interruptor 3</button>
 					<div id="box"><span id="div30"></span>&nbsp;</div>	
 			</DIV>
 			<DIV ID="ATcommands">			
-					<button onclick="sendmessage(4)">Send</button>
+					<button onclick="sendmessage(4)">Interruptor 4</button>
 					<div id="box"><span id="div40"></span>&nbsp;</div>	
 			</DIV>
 		</DIV>		
@@ -87,10 +85,8 @@
 		 var ip = location.host;
 		 //alert(ip);
 
-			var divid = 1;
-		    //var wsUri = "ws://echo.websocket.org/";             //test WenSocket.
+		    var divid = 1;
 		    var wsUri = 'ws://'+ip+'/xbee';
-		    //alert(wsUri);
 		    var output;
  			
  			function Conect() { 
@@ -108,23 +104,19 @@
  			}
  			function onMessage(evt){
 				 
- 				//output.innerHTML = '<span style="color: green;">'+evt+'</span>'
  				var print
  				var aux
 				var chaine = evt;
 				chaine = chaine.split(':');
-				//print = document.getElementById("box");
-				//print.innerHTML = evt;
 				aux = 'div'+chaine[0]+'0';
 				print = document.getElementById(aux);	
-				print.innerHTML = chaine[1];	
+				//print.innerHTML = chaine[1];
+				if (chaine[1] == 'OFF') {print.innerHTML ='<span style="color: red;">OFF</span>' }
+				else {print.innerHTML = '<span style="color: green;">ON</span>'}
+					
 				
  			}
- 			function sendmessage(id){
-				//var Param = 'Param'
-				//var storeparam = document.getElementById("PARAM").value
-				//sessionStorage.setItem(Param,storeparam);
-				//conect.send (id+sessionStorage.Param);						
+ 			function sendmessage(id){			
 				conect.send(id);
 			}
 		
