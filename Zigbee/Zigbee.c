@@ -16,7 +16,7 @@
 #define DEBUG	1
 
 //Message Id
-int id=10;
+int id=0;
 
 //Init Circular list
 msg *msg_list=NULL;
@@ -30,19 +30,12 @@ main(int argc,
      char **argv)
 {
 	//Circular list element
-//	zigbee *zgb_elem=NULL;
 	msg *msg_elem=NULL;
-
-	//buffer
-//	unsigned char buffer[0x100];
 	
 	 // default Config
 	int portNumber=INPORT;
-	char serialport[256];
+	char serialport[256]="/dev/tty";
 	int baudrate = B9600; 
-    
-    //Init Mutex
-    //sem_init(&mutex, 0, 1);
     
 #if CONFIG
 	//Check command line arguments
@@ -56,11 +49,10 @@ main(int argc,
 	// ... extract baudrate number Optional
 	if(argv[3]!=NULL){if(sscanf(argv[3],"%d",&baudrate)!=1)
 	{fprintf(stderr,"invalid listenport %s\n",argv[2]);exit(1);}}
-	
+#endif	
 	//Init serial port
 	serialFd = serial_init(serialport, baudrate);
 	if(serialFd==-1) {fprintf(stderr,"invalid serialport %s\n",argv[2]); exit(1); }
-#endif
 	
 	//Init Listen Socket	
 	//---- create listen socket ----
@@ -101,6 +93,7 @@ main(int argc,
 			unsigned char *buf=(unsigned char*)malloc(0X100);
 			int n=read(serialFd,buf,0x100);
 			if(n<0){continue;}//Nothing read
+			buf[n]='\0';
 			//Mostar el mensaje
 			printf("%s",buf);
 			//Reponse
@@ -121,14 +114,12 @@ main(int argc,
 			//...succesful Connection
 			else
 			{
-				//Cantidad Maxima?
-				id++;
 				//Print the new connection
-				printf("new connection-> ID:%d from %s:%d \n",id,inet_ntoa(fromAddr.sin_addr),ntohs(fromAddr.sin_port));	
+				printf("new connection->from %s:%d \n",inet_ntoa(fromAddr.sin_addr),ntohs(fromAddr.sin_port));	
 								
 				//add msg to circular-list
 				if ((msg_elem = (msg*)malloc(sizeof(msg))) == NULL) exit(-1);
-				msg_elem->ident=id;
+				msg_elem->ident=id++;
 				msg_elem->sockFd=dialogSocket;
 				HASH_ADD_INT(msg_list, ident, msg_elem);
 				//---- start a new dialog thread ----
@@ -170,17 +161,13 @@ dialogThread(void *arg)
   for(;;)
   {
       //---- receive and display message from client ----
-      char buffer[0x100];
+      unsigned char *buffer=(unsigned char*)malloc(0X100);
       int nb=recv(dialogSocket,buffer,0x100,0);
       if(nb<=0) { break; }
       buffer[nb]='\0';
-      printf("%s\n",buffer);
+      printf("%s",buffer);
       write(serialFd,buffer,nb);
-
-      //---- send reply to client ----
-      /*nb=sprintf(buffer,"%d bytes received\n",nb);
-      if(send(dialogSocket,buffer,nb,0)==-1)
-	{ perror("send"); exit(1); }*/
+      free(buffer);
    }
 
   //---- close dialog socket ----
