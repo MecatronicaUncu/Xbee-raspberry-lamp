@@ -63,30 +63,31 @@ void loop()
 	  if(inByte == '1')
 	  {
 	    toogleRelay(7);
+            if(digitalRead(7) == HIGH) nss.print("1:ON");
+            else nss.print("1:OFF");
             delay(500);
-            if(digitalRead(7) == HIGH) nss.println("1:ON");
-            else nss.println("1:OFF");
+            
 	  }
 	  else if(inByte == '2')
           {
 	    toogleRelay(8);
+            if(digitalRead(8) == HIGH) nss.print("2:ON");
+            else nss.print("2:OFF");
             delay(500);
-            if(digitalRead(8) == HIGH) nss.println("2:ON");
-            else nss.println("2:OFF");
 	  }
 	  else if(inByte == '3')
 	  {
 	    toogleRelay(9);
+            if(digitalRead(9) == HIGH) nss.print("3:ON");
+            else nss.print("3:OFF");
             delay(500);
-            if(digitalRead(9) == HIGH) nss.println("3:ON");
-            else nss.println("3:OFF");
 	  }
 	  else if(inByte == '4')
 	  {
 	    toogleRelay(10);
+            if(digitalRead(10) == HIGH) nss.print("4:ON");
+            else nss.print("4:OFF");
             delay(500);
-            if(digitalRead(10) == HIGH) nss.println("4:ON");
-            else nss.println("4:OFF");
 	  }
 	}
 }
