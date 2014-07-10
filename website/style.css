@@ -1,0 +1,38 @@
+ 
+div#Logo{
+	text-align:center;
+	background:;
+	width: 370px;
+	height: 180px;
+	background-image:url(LogoFacu.jpg);
+	background-repeat:no-repeat;
+	overflow:hidden;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+  
+}
+div#Title{
+	text-align:center;
+}
+div#Global {
+	background-color: white;
+}
+div#Sensores{	
+	background-color: #E8E8E8;
+}
+div#Interruption {
+	float:center;
+	background-color: red;
+}
+div#conect {
+	text-align:center;
+}
+body {
+	background: white;
+}
+div {
+	border: 1px solid #000;
+	padding: 5px;
+	margin: 5px;
+}
