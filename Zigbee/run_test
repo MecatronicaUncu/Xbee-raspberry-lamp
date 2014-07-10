@@ -19,5 +19,14 @@ killall minicom socat zigbee konsole
 )
 
 
-
+test "$1" == 'restart' &&
+( 
+echo "Deteniendo Minicom, Socat, Zigbee y Konsole"
+killall minicom socat zigbee konsole
+socat -d -d PTY,link=$PWD/1 PTY,link=$PWD/2 &
+konsole -e minicom -D 2 -b9600 &
+konsole -e ./zigbee.bin 6789 1 9600 &
+sleep 1s;
+konsole -e ./tcpClient/prog05_tcp_client.bin localhost 6789 &
+)
 
