@@ -94,6 +94,7 @@ main(int argc,
 			int n=read(serialFd,buf,0x100);
 			if(n<0){continue;}//Nothing read
 			//Mostar el mensaje
+			buf[n]='\0';
 			printf("%s",buf);
 			//Reponse
 			reponse(buf,n);
