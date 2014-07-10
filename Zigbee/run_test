@@ -10,6 +10,8 @@ konsole -e minicom -D 2 -b9600 &
 konsole -e ./zigbee.bin 6789 1 9600 &
 sleep 1s;
 konsole -e ./tcpClient/prog05_tcp_client.bin localhost 6789 &
+konsole -e ./tcpClient/prog05_tcp_client.bin localhost 6789 &
+konsole -e ./tcpClient/prog05_tcp_client.bin localhost 6789 &
 )
 
 test "$1" == 'stop' &&
