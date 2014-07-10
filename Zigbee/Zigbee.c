@@ -165,7 +165,7 @@ dialogThread(void *arg)
       int nb=recv(dialogSocket,buffer,0x100,0);
       if(nb<=0) { break; }
       buffer[nb]='\0';
-      printf("%s",buffer);
+      printf("%s\n",buffer);
       write(serialFd,buffer,nb);
       free(buffer);
    }
