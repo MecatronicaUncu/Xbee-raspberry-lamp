@@ -4,7 +4,7 @@ CFLAGS=-std=c99 -U__STRICT_ANSI__ \
        -W -Wall -pedantic -O3 \
        -D_REENTRANT
 LDFLAGS=-lpthread -lm
-SOURCES=Serial_Init.c APIframe_gen.c Zigbee.c
+SOURCES=Serial_Init.c Zigbee.c
 EXECUTABLE=zigbee.bin
 
 

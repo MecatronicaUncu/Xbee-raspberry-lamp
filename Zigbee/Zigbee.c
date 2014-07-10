@@ -93,7 +93,6 @@ main(int argc,
 			unsigned char *buf=(unsigned char*)malloc(0X100);
 			int n=read(serialFd,buf,0x100);
 			if(n<0){continue;}//Nothing read
-			buf[n]='\0';
 			//Mostar el mensaje
 			printf("%s",buf);
 			//Reponse
