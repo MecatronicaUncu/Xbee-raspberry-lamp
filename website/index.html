@@ -6,10 +6,10 @@
 	</HEAD>
 	<BODY onload="Conect()">
 		<STYLE>
-			body {background: green;
+			body {background: blue;
 			}
 			div#Logo{text-align:center;
-					background:withe;
+					background:;
 					width: 370px;
 					height: 180px;
 					background-image:url(logo_ENIB.jpg);
@@ -21,7 +21,7 @@
 			}
 			div#Title{text-align:center;}
 			div#Sensors {
-				background-color: black;
+				background-color: white;
 				border: 1px solid #000;
 				padding: 10px;
 				margin: 30px auto;
@@ -55,20 +55,32 @@
 			
 		</DIV>
 		<DIV ID="Title">
-				<h1>PROJET ELECTRONIQUE</h1>
-			</DIV>
+				<h1>PROYECTO DE ELECTRÓNICA</h1>
+		</DIV>
 		<DIV ID="Sensors">
+			<h3 >Sensores</h3>
+			<DIV ID="Interruption">
+				<h3>Estado:</h3>
+				<button onclick="Conect(1)">Conectar</button>
+				<DIV ID="conect"></DIV>
+			</DIV>
 			<DIV ID="ATcommands">
-				<h3 >AT Commands</h3>
 					<!--<input type="text" id="ATCOM" placeholder="AT Command"><br> -->
-					<input type="text" id="PARAM" placeholder="Parametres"><br>					
-					<button onclick="atcommand()">Send</button>
+					<!--<input type="text" id="PARAM" placeholder="Parametres"><br>	Entrada de texto-->				
+					<button onclick="sendmessage(1)">Send</button>
 					<div id="box"><span id="div10"></span>&nbsp;</div>	
 			</DIV>
-			<DIV ID="Interruption">
-				<h3>Etat</h3>
-				<div id="int"></div>
-				<DIV ID="conect"></DIV>
+			<DIV ID="ATcommands">				
+					<button onclick="sendmessage(2)">Send</button>
+					<div id="box"><span id="div20"></span>&nbsp;</div>	
+			</DIV>
+			<DIV ID="ATcommands">			
+					<button onclick="sendmessage(3)">Send</button>
+					<div id="box"><span id="div30"></span>&nbsp;</div>	
+			</DIV>
+			<DIV ID="ATcommands">			
+					<button onclick="sendmessage(4)">Send</button>
+					<div id="box"><span id="div40"></span>&nbsp;</div>	
 			</DIV>
 		</DIV>		
 		<SCRIPT TYPE="text/javascript">
@@ -79,16 +91,15 @@
 		    //var wsUri = "ws://echo.websocket.org/";             //test WenSocket.
 		    var wsUri = 'ws://'+ip+'/xbee';
 		    //alert(wsUri);
-		    var output; 
-		    var sensors = 0;
+		    var output;
  			
  			function Conect() { 
  				output = document.getElementById("conect"); ConectWebSocket();
  				}  
  			function ConectWebSocket() { 
  				conect = new WebSocket(wsUri); 
- 				conect.onopen = function(evt) { output.innerHTML = '<span style="color: blue;">CONECTED</span>' }; 
- 				conect.onclose = function(evt) {output.innerHTML = '<span style="color: orange;">UNCONECTED : '+evt+'</span>'};
+ 				conect.onopen = function(evt) { output.innerHTML = '<span style="color: black;">CONECTADO</span>' }; 
+ 				conect.onclose = function(evt) {output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>'};
  				conect.onmessage = function(evt) {onMessage(evt.data)}; //get a message
  				conect.onerror = function(evt) { output.innerHTML = '<span style="color: red;">ERROR</span>' }; //error.
  			} 
@@ -96,25 +107,25 @@
  				conect.close(); //close websocket
  			}
  			function onMessage(evt){
+				 
  				//output.innerHTML = '<span style="color: green;">'+evt+'</span>'
  				var print
-				//print = document.getElementById(aux);	
-				//print.innerHTML = chaine[1];	
-				print = document.getElementById("box");
-				print.innerHTML = evt;
+ 				var aux
+				var chaine = evt;
+				chaine = chaine.split(':');
+				//print = document.getElementById("box");
+				//print.innerHTML = evt;
+				aux = 'div'+chaine[0]+'0';
+				print = document.getElementById(aux);	
+				print.innerHTML = chaine[1];	
+				
  			}
- 			function atcommand(){
-				var Param = 'Param'
-				//var store = document.getElementById("ATCOM").value  //Options by text
-				var storeparam = document.getElementById("PARAM").value
-				sessionStorage.setItem(Param,storeparam);
-				conect.send (sessionStorage.Param);						
-			}
-			
-			
-			
-			function getRadioButtonSelectedValue(ctrl){
-    			for(i=0;i<ctrl.length;i++) if(ctrl[i].checked) return ctrl[i].value;
+ 			function sendmessage(id){
+				//var Param = 'Param'
+				//var storeparam = document.getElementById("PARAM").value
+				//sessionStorage.setItem(Param,storeparam);
+				//conect.send (id+sessionStorage.Param);						
+				conect.send(id);
 			}
 		
 		</SCRIPT>
