@@ -147,6 +147,8 @@ reponse(unsigned char * buf,int n)
 	{
 	      if(send(msg_elem->sockFd,buf,n,0)==-1)
 	      { printf("Aca se rompio");perror("send"); exit(1); }
+	      else printf("Esto envie:%s",buf);
+
 	}
 	return;
 }
