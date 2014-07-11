@@ -3,3 +3,6 @@
 *~
 *.bin
 *.DS_Store
+
+#=== Archivos temporales de editores
+*.kate-swp

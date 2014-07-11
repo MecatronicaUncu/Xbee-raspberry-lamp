@@ -2,6 +2,7 @@
 //-------- JQuery scripts
 
 $(document).ready(function(){
+		
 	$('#button10').on('click', function(){
 		sendmessage(1);
 		$(this).toggleClass('on');
@@ -44,26 +45,43 @@ function ConectWebSocket() {
 	conect.onclose = function(evt) {output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>'};
 	conect.onmessage = function(evt) {onMessage(evt.data)}; //get a message
 	conect.onerror = function(evt) { output.innerHTML = '<span style="color: red;">ERROR</span>' }; //error.
-} 
+}
 function Discontect(){
 	conect.close(); //close websocket
 }
 function onMessage(evt){
-		
 	var print
 	var aux
-	var chaine = evt;
-	chaine = chaine.split(':');
-	aux = 'button'+chaine[0]+'0';
-	print = document.getElementById(aux);	
-	//print.innerHTML = chaine[1];
-	if (chaine[1] == 'OFF'){
-		$(print).removeClass('ison');
-		//print.innerHTML ='<span style="color: red;">OFF</span>' 
-	}
-	else {
-		$(print).addClass('ison');
-		//print.innerHTML = '<span style="color: green;">ON</span>'
+	var cadena = evt;
+	var msgs = cadena.split(';');
+	for(var i=0; i< msgs.length;i++){
+		//alert(msgs[i]);
+		var msg = msgs[i];
+		chaine = msg.split(':');
+		//alert(chaine[0])
+		switch(chaine[0]){
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+				//alert("Buena Cadena "+chaine[0]+"   "+chaine[1]);
+				aux = 'button'+chaine[0]+'0';
+				print = document.getElementById(aux);	
+				//print.innerHTML = chaine[1];
+				if (chaine[1] == 'OFF'){
+					$(print).removeClass('ison');
+					//print.innerHTML ='<span style="color: red;">OFF</span>' 
+				}
+				else {
+					$(print).addClass('ison');
+					//print.innerHTML = '<span style="color: green;">ON</span>'
+				}
+				break;
+			default:
+				//alert("Mala cadena");
+				break;
+		}
+			
 	}
 }
 function sendmessage(id){			
