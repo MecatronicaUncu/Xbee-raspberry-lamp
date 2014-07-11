@@ -1,7 +1,5 @@
- 
 div#Logo{
 	text-align:center;
-	background:;
 	width: 370px;
 	height: 180px;
 	background-image:url(LogoFacu.jpg);
@@ -18,11 +16,11 @@ div#Title{
 div#Global {
 	background-color: white;
 }
-div#Sensores{	
+.Sensores{	
 	background-color: #E8E8E8;
 }
 div#Interruption {
-	float:center;
+	clear: both;
 	background-color: red;
 }
 div#conect {
