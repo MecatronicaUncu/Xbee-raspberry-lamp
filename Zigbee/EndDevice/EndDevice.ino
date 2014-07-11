@@ -89,6 +89,10 @@ void loop()
             else nss.println("4:OFF:");
             //delay(100);
 	  }
+          else if(inByte == 'E')
+	  {
+	    EstadoActual();
+	  }
 	}
 }
 
@@ -98,5 +102,17 @@ void toogleRelay(int p1)
         if( (p1 == 7) || (p1 == 8) || (p1 == 9) || (p1 == 10) ) //solo activa los pines conectados a los reles
         	digitalWrite(p1, digitalRead(p1) ^ 1);
 
+}
+
+void EstadoActual()
+{
+        if(digitalRead(7) == HIGH) nss.println("1:ON:");
+            else nss.println("1:OFF:");
+        if(digitalRead(8) == HIGH) nss.println("2:ON:");
+            else nss.println("2:OFF:");
+        if(digitalRead(9) == HIGH) nss.println("3:ON:");
+            else nss.println("3:OFF:");
+        if(digitalRead(10) == HIGH) nss.println("4:ON:");
+            else nss.println("4:OFF:");
 }
 

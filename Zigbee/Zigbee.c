@@ -125,7 +125,7 @@ main(int argc,
 				//---- start a new dialog thread ----
 				  pthread_t th;
 				  int *arg=(int *)malloc(sizeof(int));
-				  *arg=dialogSocket;
+				  *arg=msg_elem->ident;
 				  if(pthread_create(&th,(pthread_attr_t *)0,dialogThread,arg))
 					{ fprintf(stderr,"cannot create thread\n"); exit(1); }
 			}
@@ -146,7 +146,7 @@ reponse(unsigned char * buf,int n)
 	for(msg_elem=msg_list; msg_elem != NULL; msg_elem=(msg*)(msg_elem->hh.next))
 	{
 	      if(send(msg_elem->sockFd,buf,n,0)==-1)
-	      { perror("send"); exit(1); }
+	      { printf("Aca se rompio");perror("send"); exit(1); }
 	}
 	return;
 }
@@ -156,8 +156,19 @@ dialogThread(void *arg)
 {
   pthread_detach(pthread_self());
   //---- obtain dialog socket from arg ----
-  int dialogSocket=*(int*)arg;
+  //Recover ID
+  int Id=*((int*)(arg));
   free(arg);
+  int dialogSocket=0;
+  //Circular list element
+  msg *msg_elem=NULL;
+  //Verification of a Conection
+  if(msg_list!=NULL){HASH_FIND_INT(msg_list, &Id, msg_elem);}
+	else exit(1);
+  if(msg_elem!=NULL){dialogSocket=msg_elem->sockFd;}
+	else exit(1);
+				
+			
   for(;;)
   {
       //---- receive and display message from client ----
@@ -172,7 +183,9 @@ dialogThread(void *arg)
 
   //---- close dialog socket ----
   printf("client disconnected\n");
-  close(dialogSocket);
+  close(msg_elem->sockFd); 
+  //Erase element
+  HASH_DEL(msg_list, msg_elem);
   return (void *)0;
 }
 
