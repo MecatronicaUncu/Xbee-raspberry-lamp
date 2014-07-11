@@ -26,7 +26,6 @@ $(document).ready(function(){
 //-------- WebSocket scripts
 
 var ip = location.host;
-//alert(ip);
 
 var divid = 1;
 var wsUri = 'ws://'+ip+'/xbee';
