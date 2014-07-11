@@ -1,9 +1,8 @@
 body {
-	background-color: black;
-	/*url('http://subtlepatterns.com/patterns/micro_carbon.png');*/
+	background: url('images/micro_carbon.png');
 }
 section {
-	margin: 150px auto 0;
+	margin: 0px auto 0;
 	width: 75px;
 	height: 95px;
 	position: relative;
@@ -118,22 +117,26 @@ div {
 	padding: 5px;
 	margin: 5px;
 }
+div#header{
+	background-color:rgba(255,255,255,0.9);
+}
 div#Logo{
 	text-align:center;
-	width: 675px;
-	height: 141px;
-	background-image:url(LogoFacu.png);
+	/*width:1000px;*/
+	height:100px;
+	background-image:url(images/LogoFacu.svg);
 	background-repeat:no-repeat;
 	overflow:hidden;
-	-webkit-border-radius: 50px;
+	background-position:center;
+	/*-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
-	border-radius: 50px;
+	border-radius: 50px;*/
 }
 div#Title{
 	text-align:center;
 }
 div#Global {
-	background-color: white;
+	/*background-color: white;*/
 }
 div#Sensoresbox{
 	border-color : white;
@@ -144,15 +147,12 @@ div#Sensoresbox{
 .Sensores{	
 	float : left;
 	width:100px;
-	background-color: #E8E8E8;
+	/*background-color: #E8E8E8;*/
 }
 div#Interruption {
 	clear: both;
-	background-color: red;
+	/*background-color: red;*/
 }
 div#conect {
 	text-align:center;
-}
-body {
-	background: white;
 }
