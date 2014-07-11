@@ -13,7 +13,6 @@ div#Logo{
 	-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
 	border-radius: 50px;
-  
 }
 div#Title{
 	text-align:center;
@@ -21,7 +20,15 @@ div#Title{
 div#Global {
 	background-color: white;
 }
+div#Sensoresbox{
+	border-color : white;
+	width : 500px;
+	height : 110px;
+	margin: auto;
+}
 .Sensores{	
+	float : left;
+	width:100px;
 	background-color: #E8E8E8;
 }
 div#Interruption {
