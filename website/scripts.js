@@ -36,7 +36,11 @@ function Conect() {
 	}  
 function ConectWebSocket() { 
 	conect = new WebSocket(wsUri); 
-	conect.onopen = function(evt) { output.innerHTML = '<span style="color: white;">CONECTADO</span>' }; 
+
+	conect.onopen = function(evt) {
+		conect.onopen = function(evt) { output.innerHTML = '<span style="color: white;">CONECTADO</span>';
+		sendmessage('E');
+	}; 
 	conect.onclose = function(evt) {output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>'};
 	conect.onmessage = function(evt) {onMessage(evt.data)}; //get a message
 	conect.onerror = function(evt) { output.innerHTML = '<span style="color: red;">ERROR</span>' }; //error.
@@ -65,5 +69,3 @@ function onMessage(evt){
 function sendmessage(id){			
 	conect.send(id);
 }
-
-
