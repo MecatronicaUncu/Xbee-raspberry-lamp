@@ -19,7 +19,7 @@ $(document).ready(function(){
 		sendmessage(4);
 		$(this).toggleClass('on');
 	});
-	Conect();
+	Connect();
 });
 
 //------------------------------------------------
@@ -32,32 +32,45 @@ var divid = 1;
 var wsUri = 'ws://'+ip+'/xbee';
 var output;
 
-function Conect() { 
-	output = document.getElementById("conect"); ConectWebSocket();
-	}  
+var isConnected = false;
+
+function Connect() {
+	if(isConnected==false){
+		output = document.getElementById("conect"); 
+		ConectWebSocket();
+	}
+}
+
 function ConectWebSocket() { 
 	conect = new WebSocket(wsUri); 
-
 	conect.onopen = function(evt) {
 		output.innerHTML = '<span style="color: white;">CONECTADO</span>';
 		sendmessage('E');
+		isConnected = true;
+		console.log('isConnected: '+isConnected);
 	};
-	conect.onclose = function(evt) {output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>'};
+	conect.onclose = function(evt) {
+		output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>';
+		isConnected = false;
+		console.log('isConnected: '+isConnected);
+	};
 	conect.onmessage = function(evt) {onMessage(evt.data)}; //get a message
-	conect.onerror = function(evt) { output.innerHTML = '<span style="color: red;">ERROR</span>' }; //error.
+	conect.onerror = function(evt) {
+		output.innerHTML = '<span style="color: red;">ERROR</span>'; 
+		isConnected = false;
+		console.log('isConnected: '+isConnected);
+	}; //error.
 }
-function Discontect(){
+
+function Disconnect(){
 	conect.close(); //close websocket
 }
 function onMessage(evt){
-	var print
-	var aux
 	var cadena = evt;
 	var msgs = cadena.split(';');
 	for(var i=0; i< msgs.length;i++){
 		//alert(msgs[i]);
-		var msg = msgs[i];
-		chaine = msg.split(':');
+		var chaine = msgs[i].split(':');
 		//alert(chaine[0])
 		switch(chaine[0]){
 			case '1':
@@ -65,16 +78,16 @@ function onMessage(evt){
 			case '3':
 			case '4':
 				//alert("Buena Cadena "+chaine[0]+"   "+chaine[1]);
-				aux = 'button'+chaine[0]+'0';
-				print = document.getElementById(aux);	
+				var aux = 'button'+chaine[0]+'0';
+				var button = document.getElementById(aux);	
 				//print.innerHTML = chaine[1];
 				if (chaine[1] == 'OFF'){
-					$(print).removeClass('ison');
-					//print.innerHTML ='<span style="color: red;">OFF</span>' 
+					$(button).removeClass('ison');
+					//button.innerHTML ='<span style="color: red;"></span>' 
 				}
 				else {
-					$(print).addClass('ison');
-					//print.innerHTML = '<span style="color: green;">ON</span>'
+					$(button).addClass('ison');
+					//button.innerHTML = '<span style="color: green;">ON</span>'
 				}
 				break;
 			default:
