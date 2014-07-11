@@ -6,9 +6,13 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<link rel="stylesheet" href="style.css" type="text/css" media="all"> 
 		
+		<!-- cargar jQuery -->
+		<script type="text/javascript" src="jquery/jquery-1.7.2.min.js"></script>
+		
+		<!-- cargar nuestros scripts -->
 		<script type="text/javascript" src="scripts.js"></script>
 	</HEAD>
-	<BODY onload="Conect()">
+	<BODY>
 		<DIV ID="Logo"></DIV>
 		<DIV ID="Title">
 				<h1>PROYECTO DE ELECTR&Oacute;NICA</h1>
@@ -18,24 +22,37 @@
 			<DIV ID="Interruption">
 				<h3>Estado:</h3>
 				<button onclick="Conect(1)">Conectar</button>
-				<DIV ID="conect"></DIV>
+				<DIV ID="conect">
 			</DIV>
+
 			<DIV ID="Sensoresbox">
 				<DIV class="Sensores">			
-						<button onclick="sendmessage(1)">Interruptor 1</button>
-						<div class="box"><span id="div10"></span>&nbsp;</div>	
+						
+					<section>
+						<a href="#" id="button10">&#xF011;</a>
+						<span></span>
+					</section>
 				</DIV>
 				<DIV class="Sensores">				
-						<button onclick="sendmessage(2)">Interruptor 2</button>
-						<div class="box"><span id="div20"></span>&nbsp;</div>	
+						
+						<section>
+						<a href="#" id="button20">&#xF011;</a>
+						<span></span>
+					</section>
 				</DIV>
 				<DIV class="Sensores">			
-						<button onclick="sendmessage(3)">Interruptor 3</button>
-						<div class="box"><span id="div30"></span>&nbsp;</div>	
+						
+						<section>
+						<a href="#" id="button30">&#xF011;</a>
+						<span></span>
+					</section>
 				</DIV>
 				<DIV class="Sensores">			
-						<button onclick="sendmessage(4)">Interruptor 4</button>
-						<div class="box"><span id="div40"></span>&nbsp;</div>	
+
+						<section>
+						<a href="#" id="button40">&#xF011;</a>
+						<span></span>
+					</section>
 				</DIV>
 			</DIV>
 		</DIV>
