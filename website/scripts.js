@@ -8,12 +8,17 @@ $(document).ready(function(){
 			sendmessage(1);
 			$(this).toggleClass('on');
 		}
+		else{
+			alert('Debe conectarse para utilizar los interruptores');
+		}
 	});
 	$('#button20').on('click', function(){
 		if(isConnected){
 			sendmessage(2);
 			$(this).toggleClass('on');
-	
+		}
+		else{
+			alert('Debe conectarse para utilizar los interruptores');
 		}
 	});
 	$('#button30').on('click', function(){
@@ -21,11 +26,17 @@ $(document).ready(function(){
 			sendmessage(3);
 			$(this).toggleClass('on');
 		}
+		else{
+			alert('Debe conectarse para utilizar los interruptores');
+		}
 	});
 	$('#button40').on('click', function(){
 		if(isConnected){
 			sendmessage(4);
 			$(this).toggleClass('on');
+		}
+		else{
+			alert('Debe conectarse para utilizar los interruptores');
 		}
 	});
 	Connect();

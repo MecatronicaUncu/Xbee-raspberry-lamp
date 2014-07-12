@@ -13,8 +13,7 @@
 		<script type="text/javascript" src="scripts.js"></script>
 	</HEAD>
 	<BODY>
-		<div id="header">
-			<DIV ID="Logo"></DIV>
+		<div class="headerFooter">
 			<DIV ID="Title">
 				<h1>PROYECTO DE ELECTR&Oacute;NICA</h1>
 				<p>Accionamientos remotos por Zigbee</p>
@@ -22,13 +21,16 @@
 		</div>
 		
 		<DIV ID="Global">
-			<h3 ><span style="color: white;">Interruptores</span></h3>
+			<div class="tag">
+				<h3 ><span style="color: white;">Interruptores</span></h3>
+			</div>
 			<DIV ID="Interruption">
-				<h3><span style="color: white;">Estado:</span></h3>
-				<button onclick="Connect()">Conectar</button>
+				<div id="connectbutton">
+					<button onclick="Connect()">Conectar</button>
+				</div>
 				<DIV ID="conect">
 			</DIV>
-
+			
 			<DIV ID="Sensoresbox">
 				<DIV class="Sensores">			
 						
@@ -60,5 +62,8 @@
 				</DIV>
 			</DIV>
 		</DIV>
+	<div class="headerFooter">
+		<DIV ID="Logo"></DIV>
+	</div>
 	</BODY>
 </HTML>

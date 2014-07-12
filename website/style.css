@@ -118,7 +118,7 @@ div {
 	padding: 5px;
 	margin: 5px;
 }
-div#header{
+.headerFooter{
 	background-color:rgba(255,255,255,0.9);
 }
 div#Logo{
@@ -142,7 +142,7 @@ div#Global {
 div#Sensoresbox{
 	border-color : white;
 	width : 500px;
-	height : 110px;
+	height : 150px;
 	margin: auto;
 }
 .Sensores{	
@@ -151,10 +151,24 @@ div#Sensoresbox{
 	opacity: 0.4;
 	/*background-color: #E8E8E8;*/
 }
+
+.tag{
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+	font-size: 18px;
+}
 div#Interruption {
 	clear: both;
 	/*background-color: red;*/
 }
 div#conect {
 	text-align:center;
+}
+
+div#connectbutton{
+	clear:both;
+	margin: auto;
+	width: 100px;
+	padding:0px;
 }
