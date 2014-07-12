@@ -4,20 +4,29 @@
 $(document).ready(function(){
 		
 	$('#button10').on('click', function(){
-		sendmessage(1);
-		$(this).toggleClass('on');
+		if(isConnected){
+			sendmessage(1);
+			$(this).toggleClass('on');
+		}
 	});
 	$('#button20').on('click', function(){
-		sendmessage(2);
-		$(this).toggleClass('on');
+		if(isConnected){
+			sendmessage(2);
+			$(this).toggleClass('on');
+	
+		}
 	});
 	$('#button30').on('click', function(){
-		sendmessage(3);
-		$(this).toggleClass('on');
+		if(isConnected){
+			sendmessage(3);
+			$(this).toggleClass('on');
+		}
 	});
 	$('#button40').on('click', function(){
-		sendmessage(4);
-		$(this).toggleClass('on');
+		if(isConnected){
+			sendmessage(4);
+			$(this).toggleClass('on');
+		}
 	});
 	Connect();
 });
@@ -32,6 +41,18 @@ var wsUri = 'ws://'+ip+'/xbee';
 var output;
 
 var isConnected = false;
+function setConnected(isConn){
+	isConnected = isConn;
+	
+	if(isConnected){
+		// Conectados, activar botones
+		$(".Sensores").animate({opacity:1},500);
+	}
+	else{
+		// Desconectados, desactivar botones y mostrar mensaje
+		$(".Sensores").animate({opacity:0.4},500);
+	}
+}
 
 function Connect() {
 	if(isConnected==false){
@@ -45,18 +66,18 @@ function ConectWebSocket() {
 	conect.onopen = function(evt) {
 		output.innerHTML = '<span style="color: white;">CONECTADO</span>';
 		sendmessage('E');
-		isConnected = true;
+		setConnected(true);
 		console.log('isConnected: '+isConnected);
 	};
 	conect.onclose = function(evt) {
 		output.innerHTML = '<span style="color: orange;">DESCONECTADO: '+evt+'</span>';
-		isConnected = false;
+		setConnected(false);
 		console.log('isConnected: '+isConnected);
 	};
 	conect.onmessage = function(evt) {onMessage(evt.data)}; //get a message
 	conect.onerror = function(evt) {
 		output.innerHTML = '<span style="color: red;">ERROR</span>'; 
-		isConnected = false;
+		setConnected(false);
 		console.log('isConnected: '+isConnected);
 	}; //error.
 }
@@ -96,6 +117,18 @@ function onMessage(evt){
 			
 	}
 }
-function sendmessage(id){			
-	conect.send(id);
+function sendmessage(id){
+	if(isConnected){
+		conect.send(id);
+	}
+}
+
+
+
+function test(){
+	if(isConnected)
+		setConnected(false);
+	else
+		setConnected(true);
+	console.log('isConnected: '+isConnected);
 }
