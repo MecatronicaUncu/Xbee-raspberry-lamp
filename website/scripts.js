@@ -45,12 +45,15 @@ $(document).ready(function(){
 //------------------------------------------------
 //-------- WebSocket scripts
 
+// Obtener dirección del servidor websocket
 var ip = location.host;
-
-var divid = 1;
 var wsUri = 'ws://'+ip+'/xbee';
+
+// Div para imprimir mensajes de la conexión
 var output;
 
+// isConnected indica si hay una conexión activa
+// setConnected cambia el estado de isConnected
 var isConnected = false;
 function setConnected(isConn){
 	isConnected = isConn;
@@ -65,6 +68,7 @@ function setConnected(isConn){
 	}
 }
 
+// Connect, función llamada por html5 para solicitar una nueva conexión
 function Connect() {
 	if(isConnected==false){
 		output = document.getElementById("conect"); 
@@ -72,6 +76,7 @@ function Connect() {
 	}
 }
 
+// ConectWebSocket, crea websocket. Callbacks.
 function ConectWebSocket() { 
 	conect = new WebSocket(wsUri); 
 	conect.onopen = function(evt) {
@@ -93,9 +98,12 @@ function ConectWebSocket() {
 	}; //error.
 }
 
+// Disconnect, función llamada por html5 para cerrar conexión
 function Disconnect(){
 	conect.close(); //close websocket
 }
+
+// Callback cuando se recibe algo por el websocket
 function onMessage(evt){
 	var cadena = evt;
 	var msgs = cadena.split(';');
@@ -128,14 +136,15 @@ function onMessage(evt){
 			
 	}
 }
+
+// Callback, enviar un mensaje por el websocket
 function sendmessage(id){
 	if(isConnected){
 		conect.send(id);
 	}
 }
 
-
-
+// Función de test, cambia el estado de isConnected
 function test(){
 	if(isConnected)
 		setConnected(false);
