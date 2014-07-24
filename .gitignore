@@ -6,3 +6,15 @@
 
 #=== Archivos temporales de editores
 *.kate-swp
+
+#=== Archivos a ignorar Latex ===
+*.log
+*.aux
+*.pdf
+*.bbl
+*.blg
+*.kilepr
+*.synctex.gz
+*.backup
+
+
