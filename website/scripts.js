@@ -94,8 +94,8 @@ function ConectWebSocket() {
 	}
 	conect.onopen = function(evt) {
 		output.innerHTML = '<span style="color: white;">CONECTADO</span>';
-		sendmessage('E');
 		setConnected(true);
+		sendmessage('E');
 		console.log('isConnected: '+isConnected);
 	};
 	conect.onclose = function(evt) {
