@@ -134,7 +134,7 @@ function onMessage(evt){
 				var aux = 'button'+buttonId+'0';
 				var button = document.getElementById(aux);	
 				//print.innerHTML = chaine[1];
-				if(buttonState == 'OFF'){
+				if(buttonState == 'F'){
 					$(button).removeClass('ison');
 					//button.innerHTML ='<span style="color: red;"></span>'
 					// Cambiar el estado del boton tambien si no ha sido cambiado
@@ -143,7 +143,7 @@ function onMessage(evt){
 						buttonStateArray[buttonId-1] = false;
 					}
 				}
-				else if(buttonState == 'ON'){
+				else if(buttonState == 'N'){
 					$(button).addClass('ison');
 					//button.innerHTML = '<span style="color: green;">ON</span>'
 					if(buttonStateArray[buttonId-1]==false){
